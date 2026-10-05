@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "A user must have a name"],
       trim: true,
+      unique: true,
     },
 
     email: {
@@ -26,17 +27,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "The password is required"],
       minlength: [8, "Password must be at least 8 characters long"],
-    },
-
-    passwordConfirm: {
-      type: String,
-      required: [true, "Please confirm your password"],
-      validate: {
-        validator: function (value: string) {
-          return value === this.password;
-        },
-        message: "Passwords do not match",
-      },
     },
 
     photo: {
