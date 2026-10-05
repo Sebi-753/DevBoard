@@ -1,20 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
 import createSendToken from "../utils/createSendToken.js";
 
 import bcrypt from "bcrypt";
 import User from "../models/userModel.js";
-
-export const protect = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const authHeader = req.headers.authorization;
-  } catch (error) {
-    next(error);
-  }
-};
 
 export const signup = async (
   req: Request,
@@ -84,4 +73,48 @@ export const login = async (
   }
 };
 
-export const logout = (req: Request, res: Response) => {};
+export const logout = (req: Request, res: Response) => {
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+
+  res.status(200).json({
+    status: "success",
+    message: "Logged out successfully",
+  });
+};
+
+export const protect = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const token = req.cookies.jwt;
+
+    if (!token) {
+      return res.status(401).json({
+        status: "fail",
+        message: "You are not logged in",
+      });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+      id: string;
+    };
+
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return res.status(401).json({
+        status: "fail",
+        message: "The user belonging to this token no longer exists",
+      });
+    }
+    req.user = user;
+    next();
+  } catch (error) {
+    next(error);
+  }
+};

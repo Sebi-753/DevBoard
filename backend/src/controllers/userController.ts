@@ -8,3 +8,14 @@ export const getUsers = factoryController.getAll(User);
 export const createUser = factoryController.createOne(User);
 export const deleteUser = factoryController.deleteOne(User);
 export const updateUser = (req: Request, res: Response) => {};
+
+export const getMe = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).json({
+      status: "success",
+      data: {
+        user: req.user,
+      },
+    });
+  },
+);
