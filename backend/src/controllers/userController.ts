@@ -7,15 +7,36 @@ import catchAsync from "../utils/catchAsync.js";
 export const getUsers = factoryController.getAll(User);
 export const createUser = factoryController.createOne(User);
 export const deleteUser = factoryController.deleteOne(User);
-export const updateUser = (req: Request, res: Response) => {};
 
-export const getMe = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json({
-      status: "success",
-      data: {
-        user: req.user,
-      },
-    });
-  },
-);
+export const updateMe = catchAsync(async (req: Request, res: Response) => {
+  const filteredBody = {
+    name: req.body.name,
+    email: req.body.email,
+    photo: req.body.photo,
+  };
+
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user?._id,
+    filteredBody,
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      user: updatedUser,
+    },
+  });
+});
+
+export const getMe = catchAsync(async (req: Request, res: Response) => {
+  res.status(200).json({
+    status: "success",
+    data: {
+      user: req.user,
+    },
+  });
+});

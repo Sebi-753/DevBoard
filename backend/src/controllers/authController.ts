@@ -1,9 +1,11 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import createSendToken from "../utils/createSendToken.js";
-
 import bcrypt from "bcrypt";
+
 import User from "../models/userModel.js";
+
+import createSendToken from "../utils/createSendToken.js";
+import catchAsync from "../utils/catchAsync.js";
 
 export const signup = async (
   req: Request,
@@ -118,3 +120,21 @@ export const protect = async (
     next(error);
   }
 };
+
+export const restrictTo =
+  (...roles: ("admin" | "freelancer" | "client")[]) =>
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) {
+      return res.status(401).json({
+        status: "fail",
+        message: "You are not logged in",
+      });
+    }
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({
+        status: "fail",
+        message: "You do not have permission to perform this action",
+      });
+    }
+    next();
+  };

@@ -1,6 +1,6 @@
 import type { Model } from "mongoose";
 import catchAsync from "../utils/catchAsync.js";
-import type { RequestHandler } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 export const getAll = <T>(Model: Model<T>) => {
   return catchAsync(async (req, res, next) => {
@@ -14,7 +14,7 @@ export const getAll = <T>(Model: Model<T>) => {
   });
 };
 export const getOne = <T>(Model: Model<T>) =>
-  catchAsync(async (req, res, next) => {
+  catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const document = await Model.findById(req.params.id);
 
     if (!document) {
@@ -29,7 +29,7 @@ export const getOne = <T>(Model: Model<T>) =>
     });
   });
 export const createOne = <T>(Model: Model<T>) => {
-  return catchAsync(async (req, res, next) => {
+  return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const document = await Model.create(req.body);
 
     if (!document) {
@@ -45,7 +45,7 @@ export const createOne = <T>(Model: Model<T>) => {
   });
 };
 export const deleteOne = <T>(Model: Model<T>) => {
-  return catchAsync(async (req, res, next) => {
+  return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const document = await Model.findByIdAndDelete(req.params.id);
 
     if (!document) {

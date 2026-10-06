@@ -33,9 +33,9 @@ const projectSchema = new mongoose.Schema(
       required: [true, "A project must have an owner"],
     },
 
-    budget: {
+    buget: {
       type: Number,
-      required: [true, "The budget is required"],
+      required: [true, "The buget is required"],
       min: [0, "Budget cannot be negative"],
     },
 
