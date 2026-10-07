@@ -19,7 +19,7 @@ router
 
 router
   .route("/")
-  .get(projectController.getProjects)
+  .get(authController.restrictTo("admin"), projectController.getProjects)
   .post(
     authController.restrictTo("freelancer"),
     projectController.createProject,

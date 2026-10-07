@@ -12,7 +12,7 @@ router.use(authController.protect);
 //comments /// :id === taskId
 router
   .route("/:id/comments")
-  .get(taskController.canAccessProjectTasks, commentController.getComments)
+  .get(taskController.canAccessProjectTasks, commentController.getTaskComments)
   .post(taskController.canAccessProjectTasks, commentController.createComment);
 
 // Actions that only the freelancer can perform

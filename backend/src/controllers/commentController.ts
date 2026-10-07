@@ -8,22 +8,60 @@ import Task from "../models/taskModel.js";
 import AppError from "../utils/AppError.js";
 import Project from "../models/projectModel.js";
 
-export const getComments = factoryController.getAll(Comment);
 export const deleteComment = factoryController.deleteOne(Comment);
+export const getComments = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) {
+      return next(new AppError("You are not logged in", 401));
+    }
+    if (req.user.role !== "admin") {
+      return next(
+        new AppError("You are not authorized to perform this action", 403),
+      );
+    }
+
+    const comments = await Comment.find();
+
+    res.status(200).json({
+      status: "success",
+      results: comments.length,
+      data: {
+        comments,
+      },
+    });
+  },
+);
+export const getTaskComments = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) {
+      return next(new AppError("You are not logged in", 401));
+    }
+
+    const taskId = req.params.id as string;
+
+    const comments = await Comment.find({ task: taskId });
+
+    res.status(200).json({
+      status: "success",
+      results: comments.length,
+      data: {
+        comments,
+      },
+    });
+  },
+);
 
 export const createComment = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const task = req.params.id as string;
 
-    const text: string = req.body?.text;
+    const { text } = req.body;
 
     if (!req.user) {
       return next(new AppError("You are not logged in!", 401));
     }
 
-    const author = req.user._id;
-
-    const createdComment = { task, text, author };
+    const createdComment = { task, text, author: req.user._id };
 
     const comment = await Comment.create(createdComment);
 
@@ -69,6 +107,42 @@ export const canAccessComment = catchAsync(
         new AppError("You do not have permision to access this project!", 403),
       );
     }
+    next();
+  },
+);
+
+export const canDeleteComment = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) {
+      return next(new AppError("You are not logged in", 401));
+    }
+
+    const commentId = req.params.id as string;
+
+    //get comment
+    const comment = await Comment.findById(commentId).select("author");
+    if (!comment) {
+      return next(new AppError("Invalid comment", 400));
+    }
+
+    if (!comment.author) {
+      return next(new AppError("Invalid comment", 400));
+    }
+
+    const { author } = comment;
+
+    //admin can delete any comment
+    if (req.user.role === "admin") {
+      return next();
+    }
+
+    //a user can only delete a comment written by himself
+    if (!author.equals(req.user.id)) {
+      return next(
+        new AppError("You do not have permission to delete this comment", 403),
+      );
+    }
+
     next();
   },
 );
