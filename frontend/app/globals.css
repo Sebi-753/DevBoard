@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+body {
+  font-family: var(--font-inter);
+}
+:root {
+  /* text */
+  --text: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-disabled: #cbd5e1;
+  --text-inverted: #fff;
+
+  /* Backgrounds */
+  --background: #ffffff;
+  --background-secondary: #f8fafc;
+  --background-tertiary: #f1f5f9;
+  --background-hover: #d0d0d0;
+  --background-inverted: #000;
+
+  /* Cards / surfaces */
+  --card: #ffffff;
+  --card-hover: #f8fafc;
+
+  /* Text */
+  --foreground: #0f172a;
+  --foreground-secondary: #475569;
+  --foreground-muted: #94a3b8;
+
+  /* Borders */
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+
+  --border-focus: #416ca1;
+
+  /* Brand */
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-foreground: #ffffff;
+
+  /* Status */
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #3b82f6;
+
+  /* Inputs */
+  --input: #ffffff;
+  --input-border: #b7bbc1;
+  --input-bg: #e3e3e9;
+  --input-placeholder: #94a3b8;
+
+  /* Focus */
+  --focus: #6366f1;
+}
+
+.dark {
+  /* text */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+  --text-disabled: #475569;
+  --text-inverted: #000;
+
+  /* Backgrounds */
+  --background: #0f172a;
+  --background-secondary: #111827;
+  --background-tertiary: #1e293b;
+
+  /* Cards / surfaces */
+  --card: #111827;
+  --card-hover: #1e293b;
+
+  /* Text */
+  --foreground: #f8fafc;
+  --foreground-secondary: #cbd5e1;
+  --foreground-muted: #64748b;
+
+  /* Borders */
+  --border: #1e293b;
+  --border-hover: #334155;
+
+  /* Brand */
+  --primary: #818cf8;
+  --primary-hover: #6366f1;
+  --primary-foreground: #ffffff;
+
+  /* Status */
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #f87171;
+  --info: #60a5fa;
+
+  /* Inputs */
+  --input: #0f172a;
+  --input-border: #334155;
+  --input-placeholder: #64748b;
+
+  /* Focus */
+  --focus: #818cf8;
+}
