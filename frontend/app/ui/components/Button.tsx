@@ -15,12 +15,24 @@ export default function Button({ link = "", type, children }: Props) {
   } else if (type === "google") {
     style +=
       " bg-[var(--background)] text-[var(--text)] border border-[var(--input-border)] hover:bg-[var(--background-hover)]";
+  } else if (type === "signout") {
+    style +=
+      " bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 hover:text-red-700";
+  } else if (type === "getstarted") {
+    style +=
+      " bg-[var(--background-inverted)] text-[var(--text-inverted)] hover:bg-[var(--background-hover)]";
+  } else if (type === "how-it-works") {
+    style +=
+      " bg-[var(--primary)] text-[var(--text-inverted)] hover:bg-[var(--primary-hover)] ";
+  } else if (type === "getstarted-cta") {
+    style +=
+      " bg-[var(--background)] text-[var(--text)] hover:bg-[var(--background-hover)]";
   }
 
   if (link)
     return (
       <button className={`${style}`}>
-        <Link href={"/signup"}>{children}</Link>
+        <Link href={link}>{children}</Link>
       </button>
     );
 

@@ -1,7 +1,11 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
 body {
   font-family: var(--font-inter);
+  scroll-behavior: smooth;
 }
 :root {
   /* text */
@@ -17,6 +21,32 @@ body {
   --background-tertiary: #f1f5f9;
   --background-hover: #d0d0d0;
   --background-inverted: #000;
+  /* CTA */
+  --cta-background: #0f172a;
+  --cta-text: #ffffff;
+  --cta-text-muted: #cbd5e1;
+
+  /* footer */
+  --footer-background: #020617;
+  --footer-text: #f8fafc;
+  --footer-text-muted: #94a3b8;
+  --footer-border: #1e293b;
+  --footer-link-hover: #ffffff;
+
+  /* features */
+  --feature-blue: #eff6ff;
+  --feature-indigo: #eef2ff;
+  --feature-violet: #f5f3ff;
+  --feature-cyan: #ecfeff;
+
+  /* htw steps */
+  --step-blue: #eff6ff;
+  --step-indigo: #eef2ff;
+  --step-violet: #f5f3ff;
+
+  --step-blue-text: #2563eb;
+  --step-indigo-text: #4f46e5;
+  --step-violet-text: #7c3aed;
 
   /* Cards / surfaces */
   --card: #ffffff;

@@ -1,4 +1,4 @@
-import Navbar from "./ui/components/Navbar";
+import Navbar from "./ui/layoutComponents/Navbar";
 import CTA from "./ui/landingPageSections/CTA";
 import Features from "./ui/landingPageSections/Features";
 import Hero from "./ui/landingPageSections/Hero";
