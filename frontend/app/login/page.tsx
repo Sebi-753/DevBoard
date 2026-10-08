@@ -1,5 +1,6 @@
 import Link from "next/link";
-import Button from "../ui/components/Button";
+import LoginForm from "@/ui/layoutComponents/LoginForm";
+import React from "react";
 
 export default function page() {
   return (
@@ -11,41 +12,7 @@ export default function page() {
         <h3 className="text-2xl">Log in or Sign up</h3>
       </header>
       <main>
-        <form className="mt-6 flex flex-col gap-3">
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="text-base font-semibold">
-              Email
-            </label>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              placeholder="example@gmail.com"
-              className="w-full rounded-xl border border-transparent bg-[var(--input-bg)] px-4 py-2 transition-[border-color,box-shadow] duration-300 ease-out outline-none focus:border-[var(--input-border)] focus:ring-2 focus:ring-[var(--input-border)]/20"
-            />
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="password" className="text-base font-semibold">
-              Password
-            </label>
-            <input
-              type="text"
-              id="password"
-              name="password"
-              placeholder="••••••••"
-              className="w-full rounded-xl border border-transparent bg-[var(--input-bg)] px-4 py-2 transition-[border-color,box-shadow] duration-300 ease-out outline-none focus:border-[var(--input-border)] focus:ring-2 focus:ring-[var(--input-border)]/20"
-            />
-          </div>
-
-          <Button type="login">Log in</Button>
-          <Button link="/signup" type="signup">
-            Sign up
-          </Button>
-
-          <p className="text-center text-[var(--text-muted)]">or</p>
-
-          <Button type="google">Continue with Google</Button>
-        </form>
+        <LoginForm />
       </main>
     </section>
   );

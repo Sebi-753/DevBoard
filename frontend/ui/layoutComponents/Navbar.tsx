@@ -5,9 +5,15 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Logo from "./Logo";
+import { User } from "@/types/user";
+import { logout } from "@/lib/data-services";
+import { useRouter } from "next/navigation";
 
-export default function Navbar() {
+type Props = { user: User };
+
+export default function Navbar({ user }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -17,6 +23,16 @@ export default function Navbar() {
     };
   }, [isOpen]);
 
+  async function handleSignout() {
+    try {
+      await logout();
+      setIsOpen(false);
+      router.refresh();
+    } catch (err) {
+      if (err instanceof Error) console.log(err.message);
+      else console.log("Logout failed");
+    }
+  }
   return (
     <div>
       {/* Overlay */}
@@ -56,18 +72,25 @@ export default function Navbar() {
             <li>
               <Link href="/">Pricing</Link>
             </li>
-
             <li>
-              <Link href="/login">Log in</Link>
+              <Link href="/dashboard">Dashboard</Link>
             </li>
 
-            <li>
-              <Link href="/signup">Get started</Link>
-            </li>
+            {user ? (
+              <Link href={"/account"}>Account</Link>
+            ) : (
+              <li>
+                <Link href="/login">Log in</Link>
+              </li>
+            )}
           </ul>
         </div>
         <div>
-          <Button type="signout">Sign out</Button>
+          {user && (
+            <Button onClick={handleSignout} type="signout">
+              Sign out
+            </Button>
+          )}
         </div>
       </nav>
     </div>

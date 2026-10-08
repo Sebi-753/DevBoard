@@ -1,9 +1,21 @@
+"use client";
+
 import Link from "next/link";
 import { ReactNode } from "react";
 
-type Props = { type: string; children: ReactNode; link?: string };
+type Props = {
+  type: string;
+  children: ReactNode;
+  link?: string;
+  onClick?: () => void;
+};
 
-export default function Button({ link = "", type, children }: Props) {
+export default function Button({
+  link = "",
+  type,
+  children,
+  onClick = () => {},
+}: Props) {
   let style =
     "w-full rounded-xl py-3 text-xl font-semibold transition-all duration-300 hover:shadow-[0_1px_3px_rgba(0,0,0,0.08)] hover:-translate-y-px";
   if (type === "login") {
@@ -36,5 +48,9 @@ export default function Button({ link = "", type, children }: Props) {
       </button>
     );
 
-  return <button className={`${style}`}>{children}</button>;
+  return (
+    <button onClick={onClick} className={`${style}`}>
+      {children}
+    </button>
+  );
 }
