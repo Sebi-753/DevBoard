@@ -20,5 +20,5 @@ export async function getMe() {
     return null;
   }
 
-  return data;
+  return data.user;
 }

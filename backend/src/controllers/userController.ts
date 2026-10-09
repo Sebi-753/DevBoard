@@ -35,8 +35,6 @@ export const updateMe = catchAsync(async (req: Request, res: Response) => {
 export const getMe = catchAsync(async (req: Request, res: Response) => {
   res.status(200).json({
     status: "success",
-    data: {
-      user: req.user,
-    },
+    user: req.user,
   });
 });

@@ -13,7 +13,7 @@ export default async function Home() {
     <section>
       <Navbar user={user} />
 
-      <Hero />
+      <Hero user={user} />
       <Features />
       <HowItWorks />
       <CTA />

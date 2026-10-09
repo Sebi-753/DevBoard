@@ -2,7 +2,7 @@
 
 import Button from "../components/Button";
 import { useState } from "react";
-import { login } from "@/lib/data-services";
+import { login } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 
 export default function LoginForm() {

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Logo from "./Logo";
 import { User } from "@/types/user";
-import { logout } from "@/lib/data-services";
+import { logout } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 
 type Props = { user: User };

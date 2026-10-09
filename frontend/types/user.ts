@@ -10,3 +10,10 @@ export type User = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type CreatedUser = {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+};
