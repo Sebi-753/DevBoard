@@ -1,10 +1,9 @@
+import { getMe } from "@/lib/server-data-services";
+import { User } from "@/types/user";
 import Dashboard from "@/ui/Dashboard/Dashboard";
-import Sidebar from "@/ui/Dashboard/Sidebar";
 
-export default function page() {
-  return (
-    <div>
-dashboard
-    </div>
-  );
+export default async function page() {
+  const user: User = await getMe();
+
+  return <Dashboard user={user} />;
 }

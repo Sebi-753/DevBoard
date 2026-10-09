@@ -29,10 +29,10 @@ export default function Hero({ user }: Props) {
         <div className="w-[80%]">
           {user ? (
             <div className="flex flex-col gap-5">
-              <Button link="/dashboard" type="getstarted">
+              <Button link="/dashboard" type="dashboard">
                 Dashboard
               </Button>
-              <Button link="/dashboard" type="getstarted">
+              <Button link="/account" type="getstarted">
                 Manege account
               </Button>
             </div>

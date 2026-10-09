@@ -27,6 +27,16 @@ body {
   --cta-text: #ffffff;
   --cta-text-muted: #cbd5e1;
 
+  /* Sidebar */
+  --sidebar-bg: #f3f4f6;
+  --sidebar-border: #e5e7eb;
+  --sidebar-hover: #f3f4f6;
+  --sidebar-active: #eef2ff;
+
+  /* Sidebar text */
+  --sidebar-text: #4b5563;
+  --sidebar-text-active: #4f46e5;
+  --sidebar-text-muted: #9ca3af;
   /* footer */
   --footer-background: #020617;
   --footer-text: #f8fafc;

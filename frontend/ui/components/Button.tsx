@@ -36,9 +36,9 @@ export default function Button({
   } else if (type === "how-it-works") {
     style +=
       " bg-[var(--primary)] text-[var(--text-inverted)] hover:bg-[var(--primary-hover)] ";
-  } else if (type === "getstarted-cta") {
+  } else if (type === "dashboard") {
     style +=
-      " bg-[var(--background)] text-[var(--text)] hover:bg-[var(--background-hover)]";
+      " bg-[var(--primary)] text-[var(--text-inverted)] hover:bg-[var(--primary-hover)]";
   }
 
   if (link)

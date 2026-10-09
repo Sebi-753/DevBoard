@@ -1,3 +1,5 @@
+import { LucideIcon } from "lucide-react";
+
 export type UserRole = "freelancer" | "client" | "admin";
 
 export type User = {
@@ -17,3 +19,4 @@ export type CreatedUser = {
   password: string;
   passwordConfirm: string;
 };
+export type NavLink = { label: string; href: string; icon: LucideIcon };

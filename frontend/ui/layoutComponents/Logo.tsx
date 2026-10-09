@@ -1,13 +1,16 @@
+import Link from "next/link";
+
 type Props = {
-  className: string;
+  className?: string;
 };
 
 export default function Logo({ className }: Props) {
   return (
-    <div
+    <Link
+      href={"/"}
       className={`flex justify-center text-xl font-extrabold text-[var(--primary)] hover:text-[var(--primary-hover)] ${className}`}
     >
       DevBoard
-    </div>
+    </Link>
   );
 }
