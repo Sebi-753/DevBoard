@@ -46,14 +46,14 @@ export default function Navbar({ user }: Props) {
       {/* Menu button */}
       <button
         onClick={() => setIsOpen((open) => !open)}
-        className="fixed top-6 right-5 z-[110]"
+        className="fixed top-6 right-5 z-110"
       >
         {isOpen ? <X size={28} /> : <Menu size={28} />}
       </button>
 
       {/* Sliding navbar */}
       <nav
-        className={`fixed top-0 right-0 z-[100] flex h-[100dvh] w-[60%] flex-col justify-between bg-[var(--background)] px-5 py-10 transition-transform duration-300 ${
+        className={`fixed top-0 right-0 z-100 flex h-dvh w-[60%] flex-col justify-between bg-[var(--background)] px-5 py-10 transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >

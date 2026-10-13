@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { NavLink } from "@/types/user";
-import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   link: NavLink;

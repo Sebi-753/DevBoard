@@ -3,7 +3,6 @@
 import { NavLink, User } from "@/types/user";
 import SidebarLink from "@/ui/components/SidebarLink";
 import { usePathname } from "next/navigation";
-import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   user: User;

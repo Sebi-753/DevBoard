@@ -59,6 +59,7 @@ body {
   --step-indigo-text: #4f46e5;
   --step-violet-text: #7c3aed;
 
+  --sidebar-border: #e5e7eb;
   /* Cards / surfaces */
   --card: #ffffff;
   --card-hover: #f8fafc;
@@ -107,7 +108,7 @@ body {
   --background: #0f172a;
   --background-secondary: #111827;
   --background-tertiary: #1e293b;
-
+  --sidebar-border: #374151;
   /* Cards / surfaces */
   --card: #111827;
   --card-hover: #1e293b;
