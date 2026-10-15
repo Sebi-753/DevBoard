@@ -9,6 +9,8 @@ import { User } from "@/types/user";
 import ProjectCard from "@/ui/components/ProjectCard";
 import StatCard from "@/ui/components/StatCard";
 import TaskItem from "@/ui/components/TaskItem";
+import H2 from "@/ui/components/H2";
+import H3 from "@/ui/components/H3";
 
 type Props = { user: User };
 
@@ -55,13 +57,11 @@ const tasks: Task[] = [
 export default function FreelancerDashboard({ user }: Props) {
   return (
     <div className="flex flex-col gap-8 px-6 py-10">
-      <header>
-        <h2 className="text-center text-2xl font-bold text-[--text] sm:text-3xl">
-          Welcome back!
-        </h2>
-        <p className="mt-1 text-sm text-[--text-secondary]">
+      <header className="flex flex-col gap-3 text-center">
+        <H2 className="text-center font-bold">Welcome back!</H2>
+        <H3 className="text-sm">
           Here&apos;s what&apos;s happening with your projects.
-        </p>
+        </H3>
       </header>
 
       <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
@@ -112,7 +112,7 @@ export default function FreelancerDashboard({ user }: Props) {
 
       <div className="flex flex-col gap-3">
         <Link
-          href="/daskboard/tasks"
+          href="/dashboard/tasks"
           className="text-end text-[--text] transition duration-300 hover:text-blue-400"
         >
           View all tasks {"-->"}

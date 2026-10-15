@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Menu, ChevronLeft } from "lucide-react";
 
 import { User } from "@/types/user";
@@ -44,13 +44,25 @@ export default function Sidebar({ user }: Props) {
           <div className="my-6 h-[1px] w-full bg-gray-200"></div>
           <main>
             {user.role === "admin" && (
-              <AdminSidebar links={adminLinks} user={user} />
+              <AdminSidebar
+                links={adminLinks}
+                user={user}
+                onClick={handleClose}
+              />
             )}{" "}
             {user.role === "freelancer" && (
-              <FreelancerSidebar links={freelancerLinks} user={user} />
+              <FreelancerSidebar
+                links={freelancerLinks}
+                user={user}
+                onClick={handleClose}
+              />
             )}
             {user.role === "client" && (
-              <ClientSidebar links={clientLinks} user={user} />
+              <ClientSidebar
+                links={clientLinks}
+                user={user}
+                onClick={handleClose}
+              />
             )}
           </main>
         </div>

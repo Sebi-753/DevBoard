@@ -24,6 +24,14 @@ export default function ProjectCard({ project }: Props) {
       ? Math.round((project.completedTasks / project.totalTasks) * 100)
       : 0;
 
+  function formatDate(date: string | Date): string {
+    return new Date(date).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+  }
+
   return (
     <article className="rounded-2xl border border-[var(--sidebar-border)] bg-[--background] p-4 transition-shadow hover:shadow-md sm:p-5">
       <div className="flex items-start gap-3">
@@ -77,9 +85,7 @@ export default function ProjectCard({ project }: Props) {
         <div className="flex min-w-0 items-center gap-2 text-xs text-[--text-secondary]">
           <CalendarDays size={16} className="shrink-0" />
           <span>
-            {project.deadline
-              ? new Date(project.deadline).toLocaleDateString()
-              : "No deadline"}
+            {project.deadline ? formatDate(project.deadline) : "No deadline"}
           </span>
         </div>
 

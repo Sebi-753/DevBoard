@@ -1,5 +1,8 @@
 import HowItWorksStep from "../layoutComponents/HowItWorksStep";
 
+import H2 from "../components/H2";
+import H3 from "../components/H3";
+
 export default function HowItWorks() {
   return (
     <section
@@ -7,12 +10,8 @@ export default function HowItWorks() {
       className="flex flex-col gap-16 bg-[var(--background)] bg-[var(--background-secondary)] px-10 py-20"
     >
       <header className="flex flex-col gap-3 text-center">
-        <h2 className="text-2xl font-semibold text-[var(--text)]">
-          How it works
-        </h2>
-        <h3 className="text-base text-[var(--text-secondary)]">
-          From idea to done in three steps.
-        </h3>
+        <H2>How it works</H2>
+        <H3>From idea to done in three steps.</H3>
       </header>
       <main>
         <div className="grid grid-cols-1 gap-4">

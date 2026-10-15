@@ -8,7 +8,7 @@ type Props = {
 
 export default function Hero({ user }: Props) {
   return (
-    <section className="flex h-full flex-col gap-15 bg-[var(--background-secondary)] px-10 pt-30">
+    <section className="flex h-full flex-col gap-15 bg-[var(--background-secondary)] px-10 pt-30 pb-20">
       <Logo className="absolute top-7 left-5 text-4xl" />
       <header className="flex flex-col gap-10">
         <h1 className="text-center text-2xl font-bold">

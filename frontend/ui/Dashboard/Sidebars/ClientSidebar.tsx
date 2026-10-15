@@ -7,10 +7,10 @@ import { usePathname } from "next/navigation";
 type Props = {
   user: User;
   links: NavLink[];
-  // setIsOpen: Dispatch<SetStateAction<boolean>>;
+  onClick: () => void;
 };
 
-export default function ClientSidebar({ user, links }: Props) {
+export default function ClientSidebar({ user, links, onClick }: Props) {
   const pathname = usePathname();
 
   return (
@@ -20,7 +20,14 @@ export default function ClientSidebar({ user, links }: Props) {
           pathname === link.href ||
           (link.href !== "/dashboard" && pathname.startsWith(`${link.href}/`));
 
-        return <SidebarLink key={link.href} isActive={isActive} link={link} />;
+        return (
+          <SidebarLink
+            onClick={onClick}
+            key={link.href}
+            isActive={isActive}
+            link={link}
+          />
+        );
       })}
     </ul>
   );

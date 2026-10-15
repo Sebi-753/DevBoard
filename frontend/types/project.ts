@@ -7,5 +7,5 @@ export type Project = {
   status: ProjectStatus;
   completedTasks: number;
   totalTasks: number;
-  deadline?: string;
+  deadline: string;
 };

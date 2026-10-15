@@ -22,6 +22,7 @@ body {
   --background-tertiary: #f1f5f9;
   --background-hover: #d0d0d0;
   --background-inverted: #000;
+  --background-gray: #1c3e5e;
   /* CTA */
   --cta-background: #0f172a;
   --cta-text: #ffffff;

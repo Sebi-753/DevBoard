@@ -1,19 +1,19 @@
-import Feature from "../layoutComponents/Feature";
 import {
   FolderKanban,
   ListChecks,
   UsersRound,
   MessageSquareText,
 } from "lucide-react";
+import Feature from "../layoutComponents/Feature";
+import H2 from "../components/H2";
+import H3 from "../components/H3";
 
 export default function Features() {
   return (
     <section className="flex flex-col gap-20 bg-[var(--background)] px-10 py-20">
       <header className="flex flex-col items-center gap-3">
-        <h2 className="text-2xl font-semibold">Features</h2>
-        <h3 className="text-lg text-[var(--text-secondary)]">
-          Built for better collaboration
-        </h3>
+        <H2>Features</H2>
+        <H3 className="text-lg">Built for better collaboration</H3>
       </header>
       <main>
         <div className="grid grid-cols-1 gap-5">

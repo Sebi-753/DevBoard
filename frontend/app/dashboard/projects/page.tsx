@@ -1,5 +1,7 @@
 import { Project as ProjectType } from "@/types/project";
 import Project from "@/ui/layoutComponents/Project";
+import H2 from "@/ui/components/H2";
+import H3 from "@/ui/components/H3";
 
 const projects: ProjectType[] = [
   {
@@ -24,11 +26,12 @@ const projects: ProjectType[] = [
 
 export default function page() {
   return (
-    <section className="px-6 py-10">
-      <header>
-        <h2 className="text-center text-xl font-semibold">Your Projects</h2>
+    <section className="flex flex-col gap-6 px-6 py-10">
+      <header className="text-center">
+        <H2 className="text-xl font-semibold">Your Projects</H2>
+        <H3>Manage your projects</H3>
       </header>
-      <input />
+
       <ul className={`flex flex-col gap-4`}>
         {projects.map((project) => (
           <Project key={project._id} project={project} />

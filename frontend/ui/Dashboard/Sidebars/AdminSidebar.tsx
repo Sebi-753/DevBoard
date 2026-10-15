@@ -6,10 +6,10 @@ import { Dispatch, SetStateAction } from "react";
 type Props = {
   user: User;
   links: NavLink[];
-  // setIsOpen: Dispatch<SetStateAction<boolean>>;
+  onClick: () => void;
 };
 
-export default function AdminSidebar({ user, links }: Props) {
+export default function AdminSidebar({ user, links, onClick }: Props) {
   const pathname = usePathname();
   return (
     <ul>
@@ -18,7 +18,14 @@ export default function AdminSidebar({ user, links }: Props) {
           pathname === link.href ||
           (link.href !== "/dashboard" && pathname.startsWith(`${link.href}/`));
 
-        return <SidebarLink key={link.href} isActive={isActive} link={link} />;
+        return (
+          <SidebarLink
+            onClick={onClick}
+            key={link.href}
+            isActive={isActive}
+            link={link}
+          />
+        );
       })}
     </ul>
   );

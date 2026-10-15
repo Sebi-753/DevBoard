@@ -1,18 +1,20 @@
 import Link from "next/link";
 
 import { NavLink } from "@/types/user";
+import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   link: NavLink;
   isActive: boolean;
-  // setIsOpen: Dispatch<SetStateAction<boolean>>;
+  onClick: () => void;
 };
 
-export default function SidebarLink({ link, isActive }: Props) {
+export default function SidebarLink({ link, isActive, onClick }: Props) {
   return (
     <li>
       <Link
         href={link.href}
+        onClick={onClick}
         className={`group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-colors duration-200 ${
           isActive
             ? "bg-[var(--sidebar-active)] text-[var(--sidebar-text-active)]"
