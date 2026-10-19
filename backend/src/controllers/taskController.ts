@@ -5,6 +5,7 @@ import type { NextFunction, Request, Response } from "express";
 import catchAsync from "../utils/catchAsync.js";
 import Project from "../models/projectModel.js";
 import AppError from "../utils/AppError.js";
+import User from "../models/userModel.js";
 
 export const getTasks = factoryController.getAll(Task);
 export const getTask = factoryController.getOne(Task);
@@ -123,5 +124,26 @@ export const canModifyTask = catchAsync(
     }
 
     next();
+  },
+);
+export const getUsersTasks = catchAsync(
+  async (req: Request, res: Response, next) => {
+    if (!req.user) {
+      return next(new AppError("You are not logged in", 401));
+    }
+
+    if (req.user.role !== "freelancer") {
+      return next(
+        new AppError("You are not atuthorized to perform this action", 403),
+      );
+    }
+
+    const tasks = await Task.find({ assignedTo: req.user._id });
+
+    res.status(200).json({
+      status: "success",
+
+      tasks,
+    });
   },
 );

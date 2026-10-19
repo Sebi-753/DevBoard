@@ -2,29 +2,11 @@ import { Project as ProjectType } from "@/types/project";
 import Project from "@/ui/layoutComponents/Project";
 import H2 from "@/ui/components/H2";
 import H3 from "@/ui/components/H3";
+import { getUserProjects } from "@/lib/data-services-projects";
 
-const projects: ProjectType[] = [
-  {
-    _id: "project-1",
-    name: "Portfolio redesign",
-    description: "Build a responsive portfolio with a modern design.",
-    status: "in-progress",
-    completedTasks: 8,
-    totalTasks: 12,
-    deadline: "2026-10-20",
-  },
-  {
-    _id: "project-2",
-    name: "E-commerce website",
-    description: "Develop a storefront and product catalog.",
-    status: "planning",
-    completedTasks: 0,
-    totalTasks: 10,
-    deadline: "2026-11-05",
-  },
-];
+export default async function page() {
+  const projects: ProjectType[] = await getUserProjects();
 
-export default function page() {
   return (
     <section className="flex flex-col gap-6 px-6 py-10">
       <header className="text-center">

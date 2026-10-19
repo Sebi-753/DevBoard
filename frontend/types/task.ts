@@ -7,7 +7,7 @@ export type Task = {
   title: string;
   description?: string;
   projectName?: string;
-  dueDate?: string;
+  dueDate: string;
   priority: TaskPriority;
   status: TaskStatus;
 };

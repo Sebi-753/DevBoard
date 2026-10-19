@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.use(authController.protect);
 
+router.route("/").get(taskController.getUsersTasks);
+
 //A user must have access to the project to perform any kind of action
 //comments /// :id === taskId
 router
