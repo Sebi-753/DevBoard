@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
 
-export const getUserProjects = async function () {
+export async function getUserProjects() {
   try {
     const cookieStore = await cookies();
     const jwt = cookieStore.get("jwt");
 
-    if (!jwt) return [];
+    if (!jwt) throw new Error("You are not loggedin");
 
     const res = await fetch(`${process.env.API_URL}/projects`, {
       method: "GET",
@@ -26,4 +26,47 @@ export const getUserProjects = async function () {
     console.error(err);
     throw err;
   }
-};
+}
+export async function getProject(id: string) {
+  try {
+    const cookieStore = await cookies();
+    const jwt = cookieStore.get("jwt");
+    if (!jwt) throw new Error("You are not loggedin");
+
+    const res = await fetch(`${process.env.API_URL}/projects/${id}`, {
+      method: "GET",
+      headers: {
+        Cookie: `jwt=${jwt.value}`,
+      },
+      cache: "no-store",
+    });
+    const data = await res.json();
+
+    return data.data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+export async function getProjctsTasks(projectId: string) {
+  try {
+    const cookieStore = await cookies();
+    const jwt = cookieStore.get("jwt");
+    if (!jwt) throw new Error("You are not loggedin");
+
+    const res = await fetch(
+      `${process.env.API_URL}/projects/${projectId}/tasks`,
+      {
+        method: "GET",
+        headers: {
+          Cookie: `jwt=${jwt.value}`,
+        },
+        cache: "no-store",
+      },
+    );
+    const data = await res.json();
+
+    return data.tasks;
+  } catch (err) {
+    console.error(err);
+  }
+}

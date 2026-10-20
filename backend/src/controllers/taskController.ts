@@ -6,6 +6,7 @@ import catchAsync from "../utils/catchAsync.js";
 import Project from "../models/projectModel.js";
 import AppError from "../utils/AppError.js";
 import User from "../models/userModel.js";
+import mongoose from "mongoose";
 
 export const getTasks = factoryController.getAll(Task);
 export const getTask = factoryController.getOne(Task);
@@ -142,7 +143,21 @@ export const getUsersTasks = catchAsync(
 
     res.status(200).json({
       status: "success",
+      tasks,
+    });
+  },
+);
 
+export const getProjectTasks = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id as string;
+
+    const tasks = await Task.find({ project: id });
+    console.log(tasks);
+
+    res.status(200).json({
+      status: "success",
+      results: tasks.length,
       tasks,
     });
   },

@@ -5,22 +5,23 @@ import { useState } from "react";
 import { Plus, ListTodo } from "lucide-react";
 import ProjectTask from "./ProjectTask";
 import FilterProjectTasks from "./FilterProjectTasks";
+import { Task } from "@/types/task";
 
 export type TaskStatus = "todo" | "in-progress" | "completed";
 
-export type ProjectTask = {
-  _id: string;
-  title: string;
-  description?: string;
-  status: TaskStatus;
-  priority: "low" | "medium" | "high";
-  dueDate?: string;
-};
+// export type ProjectTask = {
+//   _id: string;
+//   title: string;
+//   description?: string;
+//   status: TaskStatus;
+//   priority: "low" | "medium" | "high";
+//   dueDate?: string;
+// };
 
 export type Filter = "all" | TaskStatus;
 
 type Props = {
-  tasks: ProjectTask[];
+  tasks: Task[];
   onAddTask?: () => void;
 };
 

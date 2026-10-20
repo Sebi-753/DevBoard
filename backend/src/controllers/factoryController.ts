@@ -23,9 +23,7 @@ export const getOne = <T>(Model: Model<T>) =>
 
     res.status(200).json({
       status: "success",
-      data: {
-        data: document,
-      },
+      data: document,
     });
   });
 export const createOne = <T>(Model: Model<T>) => {

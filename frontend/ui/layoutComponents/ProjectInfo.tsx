@@ -1,6 +1,6 @@
 import { LucideIcon } from "lucide-react";
 
-type Props = { Icon: LucideIcon; title: string; content: string };
+type Props = { Icon: LucideIcon; title: string; content?: string };
 export default function ProjectInfo({ Icon, title, content }: Props) {
   return (
     <div className="grid w-full grid-cols-[auto_1fr] gap-4 rounded-xl p-4 shadow-xs transition-shadow hover:shadow-md">

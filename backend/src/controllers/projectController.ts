@@ -4,8 +4,25 @@ import catchAsync from "../utils/catchAsync.js";
 import * as factoryController from "./factoryController.js";
 import AppError from "../utils/AppError.js";
 
-export const getProject = factoryController.getOne(Project);
 export const deleteProject = factoryController.deleteOne(Project);
+
+export const getProject = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const project = await Project.findById(req.params.id)
+      .populate("owner", "name")
+      .populate("client", "name");
+
+    if (!project) {
+      return next(new Error("No document found with that ID"));
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: project,
+    });
+  },
+);
+
 export const createProject = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     if (!req.user) {

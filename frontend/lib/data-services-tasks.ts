@@ -24,6 +24,6 @@ export const getUserTasks = async function name() {
 
     return data.tasks;
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };

@@ -10,7 +10,7 @@ router.use(authController.protect);
 
 router
   .route("/:id/tasks")
-  .get(projectController.canAccessProject, taskController.getTasks)
+  .get(projectController.canAccessProject, taskController.getProjectTasks)
   .post(
     authController.restrictTo("freelancer"),
     projectController.ownsProject,

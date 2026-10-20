@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, ChevronLeft } from "lucide-react";
 
 import { User } from "@/types/user";
