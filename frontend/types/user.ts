@@ -11,6 +11,11 @@ export type User = {
   active: boolean;
   createdAt: string;
   updatedAt: string;
+  bio?: string;
+  phone?: string;
+  birthDate?: string;
+  skills?: string[];
+  location?: string;
 };
 
 export type CreatedUser = {

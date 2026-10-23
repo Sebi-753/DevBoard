@@ -5,7 +5,6 @@ import {
   LayoutDashboard,
   ListTodo,
   Settings,
-  ShieldCheck,
   Users,
   UserRound,
   ClipboardList,

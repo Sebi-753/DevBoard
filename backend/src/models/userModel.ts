@@ -29,6 +29,11 @@ const userSchema = new mongoose.Schema(
       minlength: [8, "Password must be at least 8 characters long"],
     },
 
+    bio: String,
+    phone: String,
+    location: String,
+    birthDate: Date,
+
     photo: {
       type: String,
     },
@@ -37,6 +42,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: Object.values(UserRole),
       default: UserRole.Client,
+    },
+    skills: {
+      type: [String],
+      default: [],
     },
 
     active: {

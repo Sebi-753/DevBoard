@@ -6,6 +6,7 @@ import {
   Circle,
   Clock3,
   Flag,
+  ListTodo,
 } from "lucide-react";
 
 import type { Task } from "@/types/task";
@@ -63,23 +64,14 @@ export default function TaskItem({ task }: Props) {
           <CheckCircle2 size={22} className="text-emerald-600" />
         ) : task.status === "in-progress" ? (
           <Clock3 size={22} className="text-blue-600" />
+        ) : task.status === "todo" ? (
+          <ListTodo size={22} className="text-[var(--text-muted)]" />
         ) : (
           <Circle size={22} className="text-[var(--text-muted)]" />
         )}
       </div>
-
       {/* Task information */}
       <div className="min-w-0 flex-1">
-        {/* <h3
-          className={`truncate text-sm font-semibold sm:text-base ${
-            isCompleted
-              ? "text-[var(--text-muted)] line-through"
-              : "text-[var(--text)]"
-          }`}
-        >
-          {task.title}
-        </h3> */}
-
         <h3
           className={`line-clamp-2 text-sm leading-5 font-semibold sm:text-base sm:leading-6 ${
             isCompleted

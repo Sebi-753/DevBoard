@@ -20,7 +20,6 @@ export const getUserTasks = async function name() {
     }
 
     const data = await res.json();
-    console.log(data);
 
     return data.tasks;
   } catch (err) {

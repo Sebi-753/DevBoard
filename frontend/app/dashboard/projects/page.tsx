@@ -5,7 +5,10 @@ import H3 from "@/ui/components/H3";
 import { getUserProjects } from "@/lib/data-services-projects";
 
 export default async function page() {
-  const projects: ProjectType[] = await getUserProjects();
+  let projects: ProjectType[] = await getUserProjects();
+  projects = projects.sort(
+    (a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime(),
+  );
 
   return (
     <section className="flex flex-col gap-6 px-6 py-10">

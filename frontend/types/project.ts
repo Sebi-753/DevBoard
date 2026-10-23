@@ -1,5 +1,3 @@
-import { User } from "./user";
-
 export type ProjectStatus = "planning" | "in-progress" | "completed";
 
 export type Project = {

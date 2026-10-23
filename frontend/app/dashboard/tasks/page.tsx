@@ -9,7 +9,14 @@ import H2 from "@/ui/components/H2";
 import { getUserTasks } from "@/lib/data-services-tasks";
 
 export default async function page() {
-  const tasks: Task[] = await getUserTasks();
+  let tasks: Task[] = await getUserTasks();
+
+  tasks = tasks.sort((a, b) => {
+    if (a.status === "completed" && b.status !== "completed") return 1;
+    if (a.status !== "completed" && b.status === "completed") return -1;
+
+    return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+  });
 
   const toDoCount = tasks.filter((task) => task.status === "todo").length;
 
