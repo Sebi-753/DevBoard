@@ -5,12 +5,26 @@ import type { NextFunction, Request, Response } from "express";
 import catchAsync from "../utils/catchAsync.js";
 import Project from "../models/projectModel.js";
 import AppError from "../utils/AppError.js";
-import User from "../models/userModel.js";
-import mongoose from "mongoose";
 
 export const getTasks = factoryController.getAll(Task);
-export const getTask = factoryController.getOne(Task);
+// export const getTask = factoryController.getOne(Task);
 export const deleteTask = factoryController.deleteOne(Task);
+
+export const getTask = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.params.id);
+    const task = await Task.findById(req.params.id);
+
+    if (!task) {
+      return next(new Error("No document found with that ID"));
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: task,
+    });
+  },
+);
 
 export const createTask = catchAsync(async (req, res, next) => {
   const projectId = req.params.id;
@@ -129,6 +143,7 @@ export const canModifyTask = catchAsync(
 );
 export const getUsersTasks = catchAsync(
   async (req: Request, res: Response, next) => {
+    console.log(req.url);
     if (!req.user) {
       return next(new AppError("You are not logged in", 401));
     }

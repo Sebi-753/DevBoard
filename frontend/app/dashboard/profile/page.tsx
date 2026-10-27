@@ -1,4 +1,7 @@
+import { getUserProjects } from "@/lib/data-services-projects";
+import { getUserTasks } from "@/lib/data-services-tasks";
 import { getMe } from "@/lib/server-data-services";
+import { Task } from "@/types/task";
 import { User } from "@/types/user";
 import H2 from "@/ui/components/H2";
 import H3 from "@/ui/components/H3";
@@ -22,8 +25,18 @@ import Link from "next/link";
 
 export default async function Page() {
   const user: User = await getMe();
+
+  // number of projects
+  const projects = await getUserProjects();
+  const projectsLength = projects.length;
+
+  //number of completed tasks
+  const tasks = await getUserTasks();
+  const tasksLength = tasks.filter(
+    (task: Task) => task.status === "completed",
+  ).length;
+
   const joinedDate = formatDate(user.createdAt);
-  console.log(user);
 
   const roleStyles: Record<string, string> = {
     freelancer:
@@ -111,8 +124,16 @@ export default async function Page() {
         <main className="flex min-w-0 flex-col gap-6">
           {/* Statistics */}
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
-            <StatCard title="Projects" value={4} icon={FolderKanban} />
-            <StatCard title="Tasks Completed" value={12} icon={CheckCircle2} />
+            <StatCard
+              title="Projects"
+              value={projectsLength}
+              icon={FolderKanban}
+            />
+            <StatCard
+              title="Tasks Completed"
+              value={tasksLength}
+              icon={CheckCircle2}
+            />
           </div>
 
           {/* About me */}

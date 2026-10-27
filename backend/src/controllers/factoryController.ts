@@ -16,6 +16,7 @@ export const getAll = <T>(Model: Model<T>) => {
 export const getOne = <T>(Model: Model<T>) =>
   catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const document = await Model.findById(req.params.id);
+    console.log("GET ONE REACHED:", req.originalUrl);
 
     if (!document) {
       return next(new Error("No document found with that ID"));

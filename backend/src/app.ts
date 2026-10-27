@@ -16,16 +16,23 @@ import authRouter from "./routes/authRoute.js";
 
 export const app = express();
 
+app.use((req, res, next) => {
+  console.log("GLOBAL:", req.method, req.originalUrl);
+  next();
+});
+
 dotenv.config();
+
 // Security headers
 app.use(helmet());
-// Allow requests from Next.js frontend
+
 app.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true,
   }),
 );
+
 // Limit repeated requests
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
