@@ -9,10 +9,12 @@ export const createUser = factoryController.createOne(User);
 export const deleteUser = factoryController.deleteOne(User);
 
 export const updateMe = catchAsync(async (req: Request, res: Response) => {
+  console.log("UPDATE ME CONTROLLER REACHED");
   const filteredBody = {
     name: req.body.name,
     email: req.body.email,
     photo: req.body.photo,
+    location: req.body.location,
   };
 
   const updatedUser = await User.findByIdAndUpdate(
@@ -26,6 +28,7 @@ export const updateMe = catchAsync(async (req: Request, res: Response) => {
 
   res.status(200).json({
     status: "success",
+    debugMarker: "LATEST-UPDATE-ME-CODE",
     data: {
       user: updatedUser,
     },

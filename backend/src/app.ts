@@ -16,11 +16,6 @@ import authRouter from "./routes/authRoute.js";
 
 export const app = express();
 
-app.use((req, res, next) => {
-  console.log("GLOBAL:", req.method, req.originalUrl);
-  next();
-});
-
 dotenv.config();
 
 // Security headers

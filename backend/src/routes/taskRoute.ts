@@ -16,27 +16,24 @@ router
   .get(taskController.canAccessProjectTasks, commentController.getTaskComments)
   .post(taskController.canAccessProjectTasks, commentController.createComment);
 
-router.use((req, res, next) => {
-  console.log("URL:", req.originalUrl);
-  console.log("METHOD:", req.method);
-  console.log("PARAMS:", req.params);
-  next();
-});
-
 // Actions that only the freelancer can perform
 
 router
   .route("/:id")
-  // .delete(
-  //   authController.restrictTo("freelancer"),
-  //   taskController.canModifyTask,
-  //   taskController.deleteTask,
-  // )
-  // .patch(
-  //   authController.restrictTo("freelancer"),
-  //   taskController.canModifyTask,
-  //   taskController.updateTask,
-  // )
-  .get(authController.restrictTo("freelancer"), taskController.getTask);
+  .delete(
+    authController.restrictTo("freelancer"),
+    taskController.canModifyTask,
+    taskController.deleteTask,
+  )
+  .patch(
+    authController.restrictTo("freelancer"),
+    taskController.canModifyTask,
+    taskController.updateTask,
+  )
+  .get(
+    taskController.canAccessProjectTasks,
+    authController.restrictTo("freelancer"),
+    taskController.getTask,
+  );
 
 export default router;

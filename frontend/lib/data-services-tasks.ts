@@ -7,8 +7,8 @@ export const getTask = async function (id: string) {
 
     if (!jwt) throw new Error("You are nor logged in");
 
-    // const res = await fetch(`${process.env.API_URL}/tasks/${id}`, {
-    const res = await fetch(`${process.env.API_URL}/tasks`, {
+    const res = await fetch(`${process.env.API_URL}/tasks/${id}`, {
+      // const res = await fetch(`${process.env.API_URL}/tasks`, {
       method: "get",
       headers: {
         Cookie: `jwt=${jwt.value}`,

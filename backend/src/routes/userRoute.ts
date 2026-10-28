@@ -22,6 +22,6 @@ router
   .route("/:id")
   .get(userController.getMe)
   .delete(userController.deleteUser)
-  .patch(authController.protect, userController.updateMe);
+  .patch(userController.updateMe);
 
 export default router;
