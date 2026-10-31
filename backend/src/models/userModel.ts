@@ -1,9 +1,15 @@
 import mongoose from "mongoose";
 
+import bcrypt from "bcrypt";
+
 enum UserRole {
   Freelancer = "freelancer",
   Client = "client",
   Admin = "admin",
+}
+enum Availability {
+  FullTime = "full-time",
+  PartTime = "part-time",
 }
 
 const userSchema = new mongoose.Schema(
@@ -28,11 +34,17 @@ const userSchema = new mongoose.Schema(
       required: [true, "The password is required"],
       minlength: [8, "Password must be at least 8 characters long"],
     },
+    passwordChangedAt: Date,
 
     bio: String,
     phone: String,
     location: String,
     birthDate: Date,
+    availability: {
+      type: String,
+      enum: Object.values(Availability),
+      default: Availability.PartTime,
+    },
 
     photo: {
       type: String,

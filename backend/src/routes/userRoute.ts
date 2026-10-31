@@ -7,17 +7,17 @@ const router = express.Router();
 
 //protect all routes
 
-router.route("/me").get(authController.protect, userController.getMe);
+router.use(authController.protect);
+
+router.route("/me").get(userController.getMe);
+
+router.patch("/updateMyPassword", authController.updateMyPassword);
+
 router
   .route("/")
-  .get(
-    authController.protect,
-    authController.restrictTo("admin"),
-    userController.getUsers,
-  )
+  .get(authController.restrictTo("admin"), userController.getUsers)
   .post(userController.createUser);
 
-router.use(authController.protect);
 router
   .route("/:id")
   .get(userController.getMe)

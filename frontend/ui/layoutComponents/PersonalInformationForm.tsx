@@ -1,6 +1,6 @@
 "use client";
 
-import { updateMePersonalInfo } from "@/lib/data-services-user";
+import { updateMe } from "@/lib/data-services-user";
 import { User } from "@/types/user";
 import { UserRound, Mail, Camera, Save } from "lucide-react";
 import Image from "next/image";
@@ -31,7 +31,7 @@ export default function PersonalInformationForm({ user }: Props) {
   // console.log(user);
 
   async function onSubmit(data: UpdatedUserPersonalInfo) {
-    await updateMePersonalInfo(data, user._id);
+    await updateMe(data, user._id);
   }
   function onError() {
     return;

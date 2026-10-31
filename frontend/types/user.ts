@@ -16,6 +16,8 @@ export type User = {
   birthDate?: string;
   skills?: string[];
   location?: string;
+  availability?: "full-time" | "part-time";
+  passwordChangedAt?: Date;
 };
 
 export type CreatedUser = {

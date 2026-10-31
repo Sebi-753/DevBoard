@@ -6,6 +6,7 @@ import User from "../models/userModel.js";
 
 import createSendToken from "../utils/createSendToken.js";
 import catchAsync from "../utils/catchAsync.js";
+import AppError from "../utils/AppError.js";
 
 export const signup = async (
   req: Request,
@@ -87,6 +88,41 @@ export const logout = (req: Request, res: Response) => {
   });
 };
 
+// export const protect = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction,
+// ) => {
+//   try {
+//     const token = req.cookies.jwt;
+
+//     if (!token) {
+//       return res.status(401).json({
+//         status: "fail",
+//         message: "You are not logged in",
+//       });
+//     }
+
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+//       id: string;
+//     };
+
+//     const user = await User.findById(decoded.id);
+
+//     if (!user) {
+//       return res.status(401).json({
+//         status: "fail",
+//         message: "The user belonging to this token no longer exists",
+//       });
+//     }
+
+//     req.user = user;
+//     next();
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
 export const protect = async (
   req: Request,
   res: Response,
@@ -96,25 +132,37 @@ export const protect = async (
     const token = req.cookies.jwt;
 
     if (!token) {
-      return res.status(401).json({
-        status: "fail",
-        message: "You are not logged in",
-      });
+      return next(new AppError("You are not logged in", 401));
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
-      id: string;
-    };
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET!,
+    ) as jwt.JwtPayload & { id: string };
 
     const user = await User.findById(decoded.id);
 
     if (!user) {
-      return res.status(401).json({
-        status: "fail",
-        message: "The user belonging to this token no longer exists",
-      });
+      return next(
+        new AppError("The user belonging to this token no longer exists", 401),
+      );
     }
+
+    // Check if the password was changed after the JWT was issued
+    if (user.passwordChangedAt && decoded.iat !== undefined) {
+      const changedTimestamp = Math.floor(
+        user.passwordChangedAt.getTime() / 1000,
+      );
+
+      if (decoded.iat < changedTimestamp) {
+        return next(
+          new AppError("Password recently changed. Please log in again.", 401),
+        );
+      }
+    }
+
     req.user = user;
+
     next();
   } catch (error) {
     next(error);
@@ -138,3 +186,49 @@ export const restrictTo =
     }
     next();
   };
+
+export const updateMyPassword = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { currentPassword, newPassword, passwordConfirm } = req.body;
+
+    const user = await User.findById(req.user?._id);
+
+    if (!user) {
+      return next(new AppError("User not found", 404));
+    }
+
+    if (!currentPassword || !newPassword || !passwordConfirm) {
+      return next(new AppError("Please provide all password fields", 400));
+    }
+
+    const correctPassword = await bcrypt.compare(
+      currentPassword,
+      user.password,
+    );
+
+    if (!correctPassword) {
+      return next(new AppError("Wrong current password", 403));
+    }
+
+    if (newPassword.length < 8) {
+      return next(
+        new AppError("Password must contain at least 8 characters", 400),
+      );
+    }
+
+    if (newPassword !== passwordConfirm) {
+      return next(new AppError("Passwords do not match", 400));
+    }
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+
+    user.password = hashedPassword;
+    await user.save();
+
+    res.clearCookie("jwt");
+
+    res.status(200).json({
+      status: "success",
+      message: "Password updated successfully",
+    });
+  },
+);

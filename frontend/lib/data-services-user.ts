@@ -1,10 +1,12 @@
 "use server";
 
+import { ChangePasswordInputs } from "@/ui/layoutComponents/ChangePasswordForm";
 import { UpdatedUserPersonalInfo } from "@/ui/layoutComponents/PersonalInformationForm";
+import { UpdatedProfessionalProfile } from "@/ui/layoutComponents/ProfessionalProfileForm";
 import { cookies } from "next/headers";
 
-export const updateMePersonalInfo = async function (
-  data: UpdatedUserPersonalInfo,
+export const updateMe = async function (
+  data: UpdatedUserPersonalInfo | UpdatedProfessionalProfile,
   id: string,
 ) {
   try {
@@ -14,9 +16,6 @@ export const updateMePersonalInfo = async function (
     if (!jwt) {
       throw new Error("You are not logged in");
     }
-
-    console.log("API URL:", `${process.env.API_URL}/users/${id}`);
-    console.log("pula");
 
     const res = await fetch(`${process.env.API_URL}/users/${id}`, {
       method: "PATCH",
@@ -37,6 +36,59 @@ export const updateMePersonalInfo = async function (
     return responseData;
   } catch (err) {
     console.error(err);
+    throw err;
+  }
+};
+export const updatePassword = async function (data: ChangePasswordInputs) {
+  const cookieStore = await cookies();
+  const jwt = cookieStore.get("jwt");
+
+  if (!jwt) {
+    throw new Error("You are not logged in");
+  }
+
+  const res = await fetch(`${process.env.API_URL}/users/updateMyPassword`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `jwt=${jwt.value}`,
+    },
+    body: JSON.stringify(data),
+    cache: "no-store",
+  });
+
+  const resData = await res.json();
+
+  if (!res.ok) {
+    throw new Error(resData.message || "Failed to update password");
+  }
+
+  return resData;
+};
+
+export const deleteMe = async function (userId: string) {
+  try {
+    const cookieStore = await cookies();
+    const jwt = cookieStore.get("jwt");
+
+    if (!jwt) {
+      throw new Error("You are not logged in");
+    }
+
+    const res = await fetch(`${process.env.API_URL}/users/${userId}`, {
+      method: "DELETE",
+      headers: {
+        Cookie: `jwt=${jwt.value}`,
+      },
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to delete account");
+    }
+
+    return true;
+  } catch (err) {
     throw err;
   }
 };
