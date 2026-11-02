@@ -1,4 +1,3 @@
-import { getMe } from "@/lib/server-data-services";
 import H2 from "@/ui/components/H2";
 import H3 from "@/ui/components/H3";
 import SettingsLink from "@/ui/layoutComponents/SettingsLink";
@@ -6,7 +5,6 @@ import {
   BriefcaseBusiness,
   LucideIcon,
   ShieldCheck,
-  SlidersHorizontal,
   Trash2,
   UserRound,
 } from "lucide-react";
@@ -37,12 +35,6 @@ export const settingsLinks: SettingsItem[] = [
     description: "Change your password and manage account security.",
     href: "/dashboard/settings/security",
   },
-  // {
-  //   icon: SlidersHorizontal,
-  //   title: "Preferences",
-  //   description: "Customize your account and application preferences.",
-  //   href: "/dashboard/settings/preferences",
-  // },
   {
     icon: Trash2,
     title: "Delete Account",

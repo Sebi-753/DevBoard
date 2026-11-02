@@ -1,6 +1,7 @@
 import { getUserProjects } from "@/lib/data-services-projects";
 import { getUserTasks } from "@/lib/data-services-tasks";
-import { getMe } from "@/lib/server-data-services";
+import { getMe } from "@/lib/data-services-user";
+
 import { Task } from "@/types/task";
 import { User } from "@/types/user";
 import H2 from "@/ui/components/H2";

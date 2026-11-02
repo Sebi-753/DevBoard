@@ -5,6 +5,29 @@ import { UpdatedUserPersonalInfo } from "@/ui/layoutComponents/PersonalInformati
 import { UpdatedProfessionalProfile } from "@/ui/layoutComponents/ProfessionalProfileForm";
 import { cookies } from "next/headers";
 
+export async function getMe() {
+  const cookieStore = await cookies();
+
+  const jwt = cookieStore.get("jwt");
+
+  if (!jwt) {
+    return null;
+  }
+  const res = await fetch("http://localhost:8000/api/v1/users/me", {
+    method: "GET",
+    headers: {
+      Cookie: `jwt=${jwt.value}`,
+    },
+  });
+  const data = await res.json();
+
+  if (!res.ok) {
+    return null;
+  }
+
+  return data.user;
+}
+
 export const updateMe = async function (
   data: UpdatedUserPersonalInfo | UpdatedProfessionalProfile,
   id: string,

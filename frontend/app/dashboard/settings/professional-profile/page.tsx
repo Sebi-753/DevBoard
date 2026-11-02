@@ -1,4 +1,4 @@
-import { getMe } from "@/lib/server-data-services";
+import { getMe } from "@/lib/data-services-user";
 import { User } from "@/types/user";
 import H2 from "@/ui/components/H2";
 import ProfessionalProfileForm from "@/ui/layoutComponents/ProfessionalProfileForm";

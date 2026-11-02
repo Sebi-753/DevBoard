@@ -13,3 +13,9 @@ export const formatCommentDate = (date: string) =>
     hour: "2-digit",
     minute: "2-digit",
   });
+export const formatTaskDate = (date: string | Date) =>
+  new Date(date).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });

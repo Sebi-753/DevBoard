@@ -15,8 +15,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Comment from "@/ui/layoutComponents/Comment";
-import { getMe } from "@/lib/server-data-services";
 import PostCommentForm from "@/ui/layoutComponents/PostCommentForm";
+import { getMe } from "@/lib/data-services-user";
+import { formatTaskDate } from "@/utils/formatDate";
 
 type Props = {
   params: Promise<{ taskId: string }>;
@@ -46,13 +47,6 @@ export default async function Page({ params }: Props) {
     medium: "bg-amber-500/10 text-amber-600",
     high: "bg-red-500/10 text-red-600",
   };
-
-  const formatTaskDate = (date: string | Date) =>
-    new Date(date).toLocaleDateString("en-GB", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
 
   return (
     <section className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 sm:px-6 lg:py-10">

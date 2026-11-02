@@ -1,4 +1,4 @@
-import { getMe } from "@/lib/server-data-services";
+import { getMe } from "@/lib/data-services-user";
 import CTA from "@/ui/landingPageSections/CTA";
 import Features from "@/ui/landingPageSections/Features";
 import Footer from "@/ui/landingPageSections/Footer";

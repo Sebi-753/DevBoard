@@ -1,4 +1,4 @@
-import { getMe } from "@/lib/server-data-services";
+import { getMe } from "@/lib/data-services-user";
 import { User } from "@/types/user";
 
 import Sidebar from "@/ui/Dashboard/Sidebar";
