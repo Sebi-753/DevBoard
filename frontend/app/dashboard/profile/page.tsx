@@ -16,7 +16,6 @@ import {
   Pencil,
   Phone,
   UserRound,
-  BriefcaseBusiness,
   Clock3,
   Globe,
 } from "lucide-react";
@@ -142,7 +141,7 @@ export default async function Page() {
               <H3 className="text-lg font-semibold">About me</H3>
 
               <Link
-                href="/dashboard/settings"
+                href="/dashboard/settings/professional-profile"
                 aria-label="Edit about me"
                 className="rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-[var(--background-hover)] hover:text-[var(--primary)]"
               >
@@ -166,7 +165,7 @@ export default async function Page() {
               </div>
 
               <Link
-                href="/dashboard/settings"
+                href="/dashboard/settings/professional-profile"
                 aria-label="Edit skills"
                 className="rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-[var(--background-hover)] hover:text-[var(--primary)]"
               >
@@ -199,7 +198,7 @@ export default async function Page() {
               </H3>
 
               <Link
-                href="/dashboard/settings"
+                href="/dashboard/settings/personal-information"
                 aria-label="Edit personal information"
                 className="rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-[var(--background-hover)] hover:text-[var(--primary)]"
               >
@@ -259,7 +258,7 @@ export default async function Page() {
                 <div>
                   <p className="text-xs text-[var(--text-muted)]">Birth date</p>
                   <p className="mt-1 text-sm font-medium text-[var(--text-muted)]">
-                    {user.birthDate ? user.birthDate : "Not set"}
+                    {user.birthDate ? formatDate(user.birthDate) : "Not set"}
                   </p>
                 </div>
               </li>
@@ -272,7 +271,7 @@ export default async function Page() {
               <H3 className="text-lg font-semibold">Work preferences</H3>
 
               <Link
-                href="/dashboard/settings"
+                href="/dashboard/settings/professional-profile"
                 aria-label="Edit work preferences"
                 className="rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-[var(--background-hover)] hover:text-[var(--primary)]"
               >
@@ -282,17 +281,6 @@ export default async function Page() {
 
             <ul className="mt-5 flex flex-col gap-5">
               <li className="flex items-start gap-3">
-                <BriefcaseBusiness
-                  size={19}
-                  className="mt-1 shrink-0 text-[var(--text-muted)]"
-                />
-                <div>
-                  <p className="text-xs text-[var(--text-muted)]">Work type</p>
-                  <p className="mt-1 text-sm font-medium">Not specified</p>
-                </div>
-              </li>
-
-              <li className="flex items-start gap-3">
                 <Clock3
                   size={19}
                   className="mt-1 shrink-0 text-[var(--text-muted)]"
@@ -301,7 +289,11 @@ export default async function Page() {
                   <p className="text-xs text-[var(--text-muted)]">
                     Availability
                   </p>
-                  <p className="mt-1 text-sm font-medium">Not specified</p>
+                  <p className="mt-1 text-sm font-medium">
+                    {user.availability
+                      ? user.availability.toUpperCase()
+                      : "Not specified"}
+                  </p>
                 </div>
               </li>
 
@@ -314,7 +306,9 @@ export default async function Page() {
                   <p className="text-xs text-[var(--text-muted)]">
                     Preferred location
                   </p>
-                  <p className="mt-1 text-sm font-medium">Remote</p>
+                  <p className="mt-1 text-sm font-medium">
+                    {user.location ? user.location : "Remote"}
+                  </p>
                 </div>
               </li>
             </ul>

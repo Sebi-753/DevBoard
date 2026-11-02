@@ -1,3 +1,6 @@
+"use server";
+
+import { EditTaskData } from "@/ui/layoutComponents/EditTaskForm";
 import { cookies } from "next/headers";
 
 export const getTask = async function (id: string) {
@@ -8,16 +11,14 @@ export const getTask = async function (id: string) {
     if (!jwt) throw new Error("You are nor logged in");
 
     const res = await fetch(`${process.env.API_URL}/tasks/${id}`, {
-      // const res = await fetch(`${process.env.API_URL}/tasks`, {
       method: "get",
       headers: {
         Cookie: `jwt=${jwt.value}`,
       },
       cache: "no-store",
     });
-    console.log(res);
-    // if (!res.ok) throw new Error("Somenting went wrong!");
 
+    if (!res.ok) throw new Error("Somenting went wrong!");
     const data = await res.json();
 
     return data;
@@ -25,6 +26,7 @@ export const getTask = async function (id: string) {
     console.error(err);
   }
 };
+
 export const getUserTasks = async function () {
   try {
     const cookieStore = await cookies();
@@ -49,5 +51,37 @@ export const getUserTasks = async function () {
     return data.tasks;
   } catch (err) {
     console.error(err);
+  }
+};
+
+export const updateTask = async function (
+  updatedTask: Partial<EditTaskData>,
+  taskId: string,
+) {
+  try {
+    const cookieStore = await cookies();
+    const jwt = cookieStore.get("jwt");
+
+    if (!jwt) throw new Error("You are not logged in");
+
+    const res = await fetch(`${process.env.API_URL}/tasks/${taskId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: `jwt=${jwt.value}`,
+      },
+      body: JSON.stringify(updatedTask),
+      cache: "no-store",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to update task");
+    }
+
+    return data;
+  } catch (err) {
+    throw err;
   }
 };

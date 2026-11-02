@@ -13,7 +13,7 @@ export type User = {
   updatedAt: string;
   bio?: string;
   phone?: string;
-  birthDate?: string;
+  birthDate?: Date;
   skills?: string[];
   location?: string;
   availability?: "full-time" | "part-time";
@@ -27,3 +27,15 @@ export type CreatedUser = {
   passwordConfirm: string;
 };
 export type NavLink = { label: string; href: string; icon: LucideIcon };
+export type Client = {
+  _id: string;
+  name: string;
+  email: string;
+  photo?: string;
+  phone: string;
+  location?: string;
+  projects: {
+    _id: string;
+    name: string;
+  }[];
+};

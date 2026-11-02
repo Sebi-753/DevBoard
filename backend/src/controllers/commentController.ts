@@ -9,6 +9,7 @@ import AppError from "../utils/AppError.js";
 import Project from "../models/projectModel.js";
 
 export const deleteComment = factoryController.deleteOne(Comment);
+
 export const getComments = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     if (!req.user) {
@@ -39,7 +40,9 @@ export const getTaskComments = catchAsync(
 
     const taskId = req.params.id as string;
 
-    const comments = await Comment.find({ task: taskId });
+    const comments = await Comment.find({ task: taskId })
+      .populate("author", "name photo")
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       status: "success",
@@ -53,21 +56,34 @@ export const getTaskComments = catchAsync(
 
 export const createComment = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const task = req.params.id as string;
-
+    const taskId = req.params.id as string;
     const { text } = req.body;
 
     if (!req.user) {
       return next(new AppError("You are not logged in!", 401));
     }
 
-    const createdComment = { task, text, author: req.user._id };
+    if (!text || typeof text !== "string" || !text.trim()) {
+      return next(new AppError("Comment text is required", 400));
+    }
 
-    const comment = await Comment.create(createdComment);
+    const task = await Task.findById(taskId);
+
+    if (!task) {
+      return next(new AppError("Task not found", 404));
+    }
+
+    const comment = await Comment.create({
+      task: taskId,
+      text: text.trim(),
+      author: req.user._id,
+    });
+
+    await comment.populate("author", "name photo");
 
     res.status(201).json({
       status: "success",
-      data: comment,
+      data: { comment },
     });
   },
 );

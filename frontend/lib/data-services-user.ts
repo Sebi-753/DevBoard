@@ -92,3 +92,27 @@ export const deleteMe = async function (userId: string) {
     throw err;
   }
 };
+export const getUsersClients = async function () {
+  const cookieStore = await cookies();
+  const jwt = cookieStore.get("jwt");
+
+  if (!jwt) {
+    throw new Error("You are not logged in");
+  }
+
+  const res = await fetch(`${process.env.API_URL}/users/clients`, {
+    method: "GET",
+    headers: {
+      Cookie: `jwt=${jwt.value}`,
+    },
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error("There was an error getting the clients");
+  }
+
+  const data = await res.json();
+
+  return data.data.clients;
+};

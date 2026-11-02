@@ -12,8 +12,9 @@ export const deleteTask = factoryController.deleteOne(Task);
 
 export const getTask = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.params.id);
-    const task = await Task.findById(req.params.id);
+    const task = await Task.findById(req.params.id)
+      .populate("assignedTo", "name email photo")
+      .populate("project", "name");
 
     if (!task) {
       return next(new Error("No document found with that ID"));
@@ -48,15 +49,29 @@ export const createTask = catchAsync(async (req, res, next) => {
 
 export const updateTask = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const filteredBody = {
-      title: req.body.title,
-      description: req.body.description,
-      project: req.body.project,
-      assignedTo: req.body.assignedTo,
-      dueDate: req.body.dueDate,
-      status: req.body.status,
-      priority: req.body.priority,
-    };
+    const allowedFields = [
+      "title",
+      "description",
+      "project",
+      "assignedTo",
+      "dueDate",
+      "status",
+      "priority",
+    ] as const;
+
+    const filteredBody: Record<string, unknown> = {};
+
+    for (const field of allowedFields) {
+      if (req.body[field] !== undefined) {
+        filteredBody[field] = req.body[field];
+      }
+    }
+
+    if (Object.keys(filteredBody).length === 0) {
+      return next(
+        new AppError("Please provide at least one field to update", 400),
+      );
+    }
 
     const updatedTask = await Task.findByIdAndUpdate(
       req.params.id,
@@ -68,10 +83,7 @@ export const updateTask = catchAsync(
     );
 
     if (!updatedTask) {
-      return res.status(404).json({
-        status: "fail",
-        message: "Project not found",
-      });
+      return next(new AppError("Task not found", 404));
     }
 
     res.status(200).json({
@@ -82,7 +94,6 @@ export const updateTask = catchAsync(
     });
   },
 );
-
 export const canAccessProjectTasks = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const taskId = req.params.id;

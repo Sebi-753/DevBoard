@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-import bcrypt from "bcrypt";
-
 enum UserRole {
   Freelancer = "freelancer",
   Client = "client",

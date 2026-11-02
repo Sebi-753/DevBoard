@@ -1,4 +1,4 @@
-import { CreatedUser, User } from "@/types/user";
+import { CreatedUser } from "@/types/user";
 
 export async function login(email: string, password: string) {
   const res = await fetch("http://localhost:8000/api/v1/auth/login", {

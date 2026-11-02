@@ -4,10 +4,10 @@ import * as factoryController from "./factoryController.js";
 import User from "../models/userModel.js";
 import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/AppError.js";
+import Project from "../models/projectModel.js";
 
 export const getUsers = factoryController.getAll(User);
 export const createUser = factoryController.createOne(User);
-// export const deleteUser = factoryController.deleteOne(User);
 
 export const deleteUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -36,6 +36,8 @@ export const updateMe = catchAsync(async (req: Request, res: Response) => {
     "bio",
     "skills",
     "availability",
+    "birthDate",
+    "phone",
   ];
 
   const filteredBody: Record<string, unknown> = {};
@@ -67,3 +69,51 @@ export const getMe = catchAsync(async (req: Request, res: Response) => {
     user: req.user,
   });
 });
+
+export const getUserClients = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) {
+      return next(new AppError("You are not logged in", 401));
+    }
+
+    // Get all projects belonging to the freelancer
+    const projects = await Project.find({
+      owner: req.user._id,
+    }).select("name client");
+
+    // Get unique client IDs
+    const clientsIds = [
+      ...new Set(projects.map((project) => project.client.toString())),
+    ];
+
+    // Get client information
+    const clients = await User.find({
+      _id: { $in: clientsIds },
+    }).select("name email photo location phone");
+
+    // Attach projects to their respective clients
+    const clientsWithProjects = clients.map((client) => {
+      const clientProjects = projects
+        .filter(
+          (project) => project.client.toString() === client._id.toString(),
+        )
+        .map((project) => ({
+          _id: project._id,
+          name: project.name,
+        }));
+
+      return {
+        ...client.toObject(),
+        projects: clientProjects,
+      };
+    });
+
+    res.status(200).json({
+      status: "success",
+      results: clientsWithProjects.length,
+      data: {
+        clients: clientsWithProjects,
+      },
+    });
+  },
+);

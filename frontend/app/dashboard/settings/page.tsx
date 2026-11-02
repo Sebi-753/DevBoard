@@ -37,12 +37,12 @@ export const settingsLinks: SettingsItem[] = [
     description: "Change your password and manage account security.",
     href: "/dashboard/settings/security",
   },
-  {
-    icon: SlidersHorizontal,
-    title: "Preferences",
-    description: "Customize your account and application preferences.",
-    href: "/dashboard/settings/preferences",
-  },
+  // {
+  //   icon: SlidersHorizontal,
+  //   title: "Preferences",
+  //   description: "Customize your account and application preferences.",
+  //   href: "/dashboard/settings/preferences",
+  // },
   {
     icon: Trash2,
     title: "Delete Account",
