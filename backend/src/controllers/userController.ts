@@ -1,7 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 import * as factoryController from "./factoryController.js";
 
-import User from "../models/userModel.js";
+import User, { UserRole } from "../models/userModel.js";
+
 import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/AppError.js";
 import Project from "../models/projectModel.js";
@@ -114,6 +115,18 @@ export const getUserClients = catchAsync(
       data: {
         clients: clientsWithProjects,
       },
+    });
+  },
+);
+
+export const getClients = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const users = await User.find({ role: UserRole.Client });
+
+    res.status(200).json({
+      status: "success",
+      results: users.length,
+      users,
     });
   },
 );

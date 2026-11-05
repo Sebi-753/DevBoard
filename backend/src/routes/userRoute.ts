@@ -10,11 +10,13 @@ const router = express.Router();
 router.use(authController.protect);
 
 router.route("/me").get(userController.getMe);
+router.patch("/updateMyPassword", authController.updateMyPassword);
+
 router
   .route("/clients")
   .get(authController.restrictTo("freelancer"), userController.getUserClients);
 
-router.patch("/updateMyPassword", authController.updateMyPassword);
+router.route("/getClients").get(userController.getClients);
 
 router
   .route("/")

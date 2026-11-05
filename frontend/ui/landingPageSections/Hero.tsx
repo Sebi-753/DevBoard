@@ -32,7 +32,7 @@ export default function Hero({ user }: Props) {
               <Button link="/dashboard" type="dashboard">
                 Dashboard
               </Button>
-              <Button link="/account" type="getstarted">
+              <Button link="/dashboard/profile" type="getstarted">
                 Manege account
               </Button>
             </div>

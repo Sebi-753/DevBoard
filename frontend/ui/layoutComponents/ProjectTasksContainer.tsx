@@ -9,20 +9,11 @@ import { Task } from "@/types/task";
 
 export type TaskStatus = "todo" | "in-progress" | "completed";
 
-// export type ProjectTask = {
-//   _id: string;
-//   title: string;
-//   description?: string;
-//   status: TaskStatus;
-//   priority: "low" | "medium" | "high";
-//   dueDate?: string;
-// };
-
 export type Filter = "all" | TaskStatus;
 
 type Props = {
   tasks: Task[];
-  onAddTask?: () => void;
+  projectid: string;
 };
 
 const filters: { label: string; value: Filter }[] = [
@@ -50,13 +41,16 @@ export const formatLabel = (value: string) =>
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
-export default function ProjectTasksContainer({ tasks, onAddTask }: Props) {
+export default function ProjectTasksContainer({ tasks, projectid }: Props) {
+  const [showAll, setShowAll] = useState(false);
   const [activeFilter, setActiveFilter] = useState<Filter>("all");
 
   const filteredTasks =
     activeFilter === "all"
       ? tasks
       : tasks.filter((task) => task.status === activeFilter);
+
+  const visibleTasks = showAll ? filteredTasks : filteredTasks.slice(0, 3);
 
   const counts = {
     all: tasks.length,
@@ -79,7 +73,7 @@ export default function ProjectTasksContainer({ tasks, onAddTask }: Props) {
         </div>
 
         <Link
-          href={"/dashboard/addTask"}
+          href={`/dashboard/addTask?projectId=${projectid}`}
           type="button"
           // onClick={onAddTask}
           className="inline-flex items-center justify-center gap-2 rounded-lg bg-sky-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sky-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
@@ -98,25 +92,31 @@ export default function ProjectTasksContainer({ tasks, onAddTask }: Props) {
       />
 
       {/* Task list */}
-      <div className="space-y-3">
-        {filteredTasks.length > 0 ? (
-          filteredTasks.map((task) => (
-            <ProjectTask task={task} key={task._id} />
-          ))
-        ) : (
-          <div className="flex flex-col items-center justify-center py-10 text-center">
-            <ListTodo size={32} className="mb-3 text-[var(--text-secondary)]" />
-            <p className="font-semibold text-[var(--foreground)]">
-              No tasks found
-            </p>
-            <p className="mt-1 text-sm text-[var(--text-secondary)]">
-              {activeFilter === "all"
-                ? "Add a task to get this project started."
-                : `There are no ${formatLabel(activeFilter).toLowerCase()} tasks.`}
-            </p>
-          </div>
-        )}
-      </div>
+      {visibleTasks.length > 0 ? (
+        visibleTasks.map((task) => <ProjectTask task={task} key={task._id} />)
+      ) : (
+        <div className="flex flex-col items-center justify-center py-10 text-center">
+          <ListTodo size={32} className="mb-3 text-[var(--text-secondary)]" />
+          <p className="font-semibold text-[var(--foreground)]">
+            No tasks found
+          </p>
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">
+            {activeFilter === "all"
+              ? "Add a task to get this project started."
+              : `There are no ${formatLabel(activeFilter).toLowerCase()} tasks.`}
+          </p>
+        </div>
+      )}
+
+      {filteredTasks.length > 3 && (
+        <button
+          type="button"
+          onClick={() => setShowAll((prev) => !prev)}
+          className="w-full py-2 text-sm font-semibold text-sky-600 hover:text-sky-700"
+        >
+          {showAll ? "Show Less" : `Show More (${filteredTasks.length - 3})`}
+        </button>
+      )}
 
       {/* Footer */}
       <div className="flex items-center justify-between border-t border-[var(--input-border)] pt-4 text-sm text-[var(--text-secondary)]">

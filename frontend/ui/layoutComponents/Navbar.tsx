@@ -62,22 +62,19 @@ export default function Navbar({ user }: Props) {
 
           <ul className="mt-10 flex flex-col items-center gap-8 text-lg font-semibold">
             <li>
-              <Link href="/">Features</Link>
+              <Link href="/#features">Features</Link>
             </li>
 
             <li>
-              <Link href="/">How it works</Link>
+              <Link href="/#how-it-works">How it works</Link>
             </li>
 
-            <li>
-              <Link href="/">Pricing</Link>
-            </li>
             <li>
               <Link href="/dashboard">Dashboard</Link>
             </li>
 
             {user ? (
-              <Link href={"/account"}>Account</Link>
+              <Link href="/dashboard/profile">Account</Link>
             ) : (
               <li>
                 <Link href="/login">Log in</Link>

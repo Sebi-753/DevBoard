@@ -1,5 +1,6 @@
 "use server";
 
+import { TaskFormData } from "@/ui/layoutComponents/AddTaskForm";
 import { EditTaskData } from "@/ui/layoutComponents/EditTaskForm";
 import { cookies } from "next/headers";
 
@@ -84,4 +85,31 @@ export const updateTask = async function (
   } catch (err) {
     throw err;
   }
+};
+export const createTask = async function (
+  task: TaskFormData,
+  projectId: string,
+) {
+  const cookieStore = await cookies();
+  const jwt = cookieStore.get("jwt");
+
+  if (!jwt) throw new Error("You are not logged in");
+
+  const res = await fetch(
+    `${process.env.API_URL}/projects/${projectId}/tasks`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: `jwt=${jwt.value}`,
+      },
+      body: JSON.stringify(task),
+      cache: "no-store",
+    },
+  );
+  if (!res.ok) throw new Error("Failed to create the task");
+
+  const data = await res.json();
+
+  return data.task;
 };

@@ -51,6 +51,7 @@ const projectSchema = new mongoose.Schema(
 
     coverImage: {
       type: String,
+      default: "frontend/public/images/default-project.jpg",
     },
   },
   {

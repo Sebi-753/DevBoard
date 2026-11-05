@@ -63,7 +63,7 @@ export default async function FreelancerDashboard({ user }: Props) {
 
   const dueThisWeek = tasksDueThisWeek + projectsDueThisWeek;
   const activeProjectsCount = projects.filter(
-    (project) => project.status === "in-progress",
+    (project) => project.status !== "completed",
   ).length;
   const pendingTasksCount = tasks.filter(
     (task) => task.status === "in-progress",

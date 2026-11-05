@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.use(authController.protect);
 
+//:id = projectID
 router
   .route("/:id/tasks")
   .get(projectController.canAccessProject, taskController.getProjectTasks)

@@ -1,3 +1,5 @@
+"use server";
+import { ProjectFormData } from "@/ui/layoutComponents/AddProjectForm";
 import { cookies } from "next/headers";
 
 export async function getUserProjects() {
@@ -69,4 +71,30 @@ export async function getProjctsTasks(projectId: string) {
   } catch (err) {
     console.error(err);
   }
+}
+export async function createProject(project: ProjectFormData) {
+  const cookieStore = await cookies();
+  const jwt = cookieStore.get("jwt");
+
+  if (!jwt) {
+    throw new Error("You are not logged in");
+  }
+  const res = await fetch(`${process.env.API_URL}/projects`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `jwt=${jwt.value}`,
+    },
+    body: JSON.stringify({
+      ...project,
+      buget: Number(project.buget),
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to create project");
+  }
+  const data = await res.json();
+  return data;
 }

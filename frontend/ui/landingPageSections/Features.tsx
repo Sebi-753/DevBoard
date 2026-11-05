@@ -10,7 +10,10 @@ import H3 from "../components/H3";
 
 export default function Features() {
   return (
-    <section className="flex flex-col gap-20 bg-[var(--background)] px-10 py-20">
+    <section
+      id="features"
+      className="flex flex-col gap-20 bg-[var(--background)] px-10 py-20"
+    >
       <header className="flex flex-col items-center gap-3">
         <H2>Features</H2>
         <H3 className="text-lg">Built for better collaboration</H3>

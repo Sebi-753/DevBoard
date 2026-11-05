@@ -156,7 +156,7 @@ export default async function page({ params }: Props) {
           </div>
         </div>
         <div className="mt-10">
-          <ProjectTasksContainer tasks={tasks} />
+          <ProjectTasksContainer tasks={tasks} projectid={projectid} />
         </div>
       </main>
     </section>

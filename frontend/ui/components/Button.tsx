@@ -39,8 +39,10 @@ export default function Button({
   } else if (type === "dashboard") {
     style +=
       " bg-[var(--primary)] text-[var(--text-inverted)] hover:bg-[var(--primary-hover)]";
+  } else if (type === "primary") {
+    style +=
+      " bg-[var(--primary)] text-[var(--text-inverted)] hover:bg-[var(--primary-hover)]";
   }
-
   if (link)
     return (
       <button className={`${style}`}>

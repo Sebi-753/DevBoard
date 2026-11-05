@@ -63,7 +63,7 @@ export const getProjects = catchAsync(async (req, res) => {
     filter = { client: req.user._id };
   }
 
-  const projects = await Project.find(filter);
+  const projects = await Project.find(filter).sort({ createdAt: -1 });
 
   res.status(200).json({
     status: "success",

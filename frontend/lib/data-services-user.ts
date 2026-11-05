@@ -139,3 +139,23 @@ export const getUsersClients = async function () {
 
   return data.data.clients;
 };
+export const getClients = async function () {
+  const cookieStore = await cookies();
+  const jwt = cookieStore.get("jwt");
+
+  if (!jwt) {
+    throw new Error("You are not logged in");
+  }
+  const res = await fetch(`${process.env.API_URL}/users/getClients`, {
+    method: "GET",
+    headers: {
+      Cookie: `jwt=${jwt.value}`,
+    },
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    throw new Error("Faild to get the clients");
+  }
+  const data = await res.json();
+  return data.users;
+};

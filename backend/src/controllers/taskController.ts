@@ -41,9 +41,7 @@ export const createTask = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: "success",
-    data: {
-      task,
-    },
+    task,
   });
 });
 
@@ -154,7 +152,6 @@ export const canModifyTask = catchAsync(
 );
 export const getUsersTasks = catchAsync(
   async (req: Request, res: Response, next) => {
-    console.log(req.url);
     if (!req.user) {
       return next(new AppError("You are not logged in", 401));
     }
